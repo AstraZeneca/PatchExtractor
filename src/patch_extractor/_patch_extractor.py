@@ -80,8 +80,7 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
         self._area_threshold = ap.process_area_threshold(area_threshold)
         self._foreground = ap.process_foreground_arg(patch_foreground)
         self._min_obj_size = ap.process_min_object_size_arg(min_obj_size)
-
-        _ = zip_patches
+        self._zip_patches = ap.process_zip_patches_arg(zip_patches)
 
     _slide_path = Path("")
     _save_dir = Path("")
