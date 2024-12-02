@@ -177,3 +177,16 @@ def test_min_obj_size_arg():
     for obj_size in [-0.0001, -100.0]:
         with pytest.raises(ValueError):
             _ = PatchExtractor(min_obj_size=obj_size)
+
+
+def test_zip_patches_arg():
+    """Test the ``zip_patches`` argument."""
+    # Should work with bool.
+    for zip_patches in [True, False]:
+        _ = PatchExtractor(zip_patches=zip_patches)
+
+    # Should break with any other argument type.
+    for zip_patches in [0.0, 1.0, 5j, "Batman"]:
+
+        with pytest.raises(TypeError):
+            _ = PatchExtractor(zip_patches=zip_patches)
