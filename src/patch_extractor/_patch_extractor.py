@@ -48,6 +48,9 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
     min_obj_size : float, optional
         The area of the smallest objects, in square microns, permitted in the
         mask.
+    zip_patches : bool, optional
+        If ``True``, the patch subdirectory the patches are writtent to will
+        instead be a zipfile.
 
     """
 
@@ -64,6 +67,7 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
         area_threshold: float = 0.0,
         patch_foreground: float = 0.5,
         min_obj_size: float = 2500.0,
+        zip_patches: bool = False,
     ):
         """Set up ``PatchExtractor``."""
         self._patch_size = ap.process_patch_size_arg(patch_size)
@@ -76,6 +80,8 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
         self._area_threshold = ap.process_area_threshold(area_threshold)
         self._foreground = ap.process_foreground_arg(patch_foreground)
         self._min_obj_size = ap.process_min_object_size_arg(min_obj_size)
+
+        _ = zip_patches
 
     _slide_path = Path("")
     _save_dir = Path("")
