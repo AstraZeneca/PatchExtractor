@@ -139,17 +139,19 @@ def _save_patch(info: Dict[str, Any]):
     file_name = info["save_dir"]
     file_name /= f"{info['slide_path'].name}---[x={info['left']},y={info['top']}].png"
 
-    file_name.parent.mkdir(parents=True, exist_ok=True)
+    # file_name.parent.mkdir(parents=True, exist_ok=True)
 
     imsave(file_name, img_as_ubyte(patch))
 
 
+# pylint: disable=too-many-positional-arguments,too-many-arguments
 def extract_patches(
     coords: DataFrame,
     slide_path: Path,
     patch_size: int,
     save_dir: Path,
     workers: int,
+    zip_patches: bool,
 ):
     """Extract patches from the WSI.
 
@@ -165,11 +167,13 @@ def extract_patches(
         Directory to save the patches in.
     workers : int
         The number of workers to use in the patch extraction.
+    zip_patches : bool
+        Should the patches be saved in a zip file or not?
+
 
     """
     coords = coords.copy()
     coords["slide_path"] = slide_path
-    coords["save_dir"] = save_dir
     coords["patch_size"] = patch_size
 
     keys = [
@@ -181,6 +185,14 @@ def extract_patches(
         "save_dir",
         "patch_size",
     ]
+
+    if zip_patches is False:
+        save_dir.mkdir(exist_ok=True, parents=True)
+    else:
+        save_dir = Path(str(save_dir.resolve()) + ".zip")
+        save_dir.parent.mkdir(exist_ok=True, parents=True)
+
+    coords["save_dir"] = save_dir
 
     patch_info = coords[keys].apply(dict, axis=1)
 
