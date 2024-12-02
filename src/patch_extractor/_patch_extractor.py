@@ -164,6 +164,7 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
             self._patch_size,
             save_dir,
             self._workers,
+            self._zip_patches,
         )
 
     def __repr__(self):
