@@ -156,7 +156,7 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
         coords = coords.loc[coords.mask_frac >= self._foreground]
 
         save_dir = self._save_dir / f"{self._slide_path}/patches"
-        save_dir /= f"L={self._patch_size},mpp={self._patch_mpp:.3f}"
+        save_dir /= f"L={self._patch_size}-mpp={self._patch_mpp:.3f}"
 
         extract_patches(
             coords,
