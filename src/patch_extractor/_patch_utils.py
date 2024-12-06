@@ -138,8 +138,12 @@ def _save_patch(info: Dict[str, Any]):
         output_shape=(info["patch_size"], info["patch_size"]),
     )
 
+    width = info["right"] - info["left"]
+    height = info["bottom"] - info["top"]
+
     file_name = info["save_dir"]
-    file_name /= f"{info['slide_path'].name}---[x={info['left']},y={info['top']}].png"
+    # pylint: disable=line-too-long
+    file_name /= f"{info['slide_path'].name}---[x={info['left']},y={info['top']},w={width},h={height}].png"
 
     imsave(file_name, img_as_ubyte(patch), check_contrast=False)
 
