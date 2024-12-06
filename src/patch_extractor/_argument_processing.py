@@ -276,3 +276,24 @@ def process_min_object_size_arg(min_obj_size: float) -> float:
         raise ValueError(msg)
 
     return min_obj_size
+
+
+def process_zip_patches_arg(zip_patches: bool) -> bool:
+    """Type check the ``zip_patches`` argument.
+
+    Parameters
+    ----------
+    zip_patches : bool
+        Boolean arg determing whether the patches are saved in a zip.
+
+    Raises
+    ------
+    TypeError
+        If ``zip_patches`` is not a bool.
+
+    """
+    if not isinstance(zip_patches, bool):
+        msg = f"'zip_patches' should be bool, got '{type(zip_patches)}'."
+        raise TypeError(msg)
+
+    return zip_patches
