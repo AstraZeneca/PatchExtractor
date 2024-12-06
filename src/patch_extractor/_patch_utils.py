@@ -141,7 +141,7 @@ def _save_patch(info: Dict[str, Any]):
     file_name = info["save_dir"]
     file_name /= f"{info['slide_path'].name}---[x={info['left']},y={info['top']}].png"
 
-    imsave(file_name, img_as_ubyte(patch))
+    imsave(file_name, img_as_ubyte(patch), check_contrast=False)
 
 
 # pylint: disable=too-many-positional-arguments,too-many-arguments
