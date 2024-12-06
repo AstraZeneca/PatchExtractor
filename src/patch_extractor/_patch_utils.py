@@ -2,6 +2,8 @@
 
 from typing import Dict, Any
 
+from shutil import make_archive, rmtree
+
 from multiprocessing import Pool
 
 from pathlib import Path
@@ -139,8 +141,6 @@ def _save_patch(info: Dict[str, Any]):
     file_name = info["save_dir"]
     file_name /= f"{info['slide_path'].name}---[x={info['left']},y={info['top']}].png"
 
-    # file_name.parent.mkdir(parents=True, exist_ok=True)
-
     imsave(file_name, img_as_ubyte(patch))
 
 
@@ -175,6 +175,7 @@ def extract_patches(
     coords = coords.copy()
     coords["slide_path"] = slide_path
     coords["patch_size"] = patch_size
+    coords["save_dir"] = save_dir
 
     keys = [
         "left",
@@ -186,15 +187,18 @@ def extract_patches(
         "patch_size",
     ]
 
-    if zip_patches is False:
-        save_dir.mkdir(exist_ok=True, parents=True)
-    else:
-        save_dir = Path(str(save_dir.resolve()) + ".zip")
-        save_dir.parent.mkdir(exist_ok=True, parents=True)
-
-    coords["save_dir"] = save_dir
+    save_dir.mkdir(exist_ok=True, parents=True)
 
     patch_info = coords[keys].apply(dict, axis=1)
 
     with Pool(processes=workers) as pool:
         pool.map(_save_patch, patch_info)
+
+    if zip_patches is True:
+        make_archive(
+            str(save_dir),
+            "zip",
+            save_dir,
+        )
+
+        rmtree(save_dir)
