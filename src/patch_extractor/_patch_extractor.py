@@ -64,7 +64,6 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
         workers: int = 8,
         mask_method: str = "otsu",
         element_size: float = 100.0,
-        area_threshold: float = 0.0,
         patch_foreground: float = 0.5,
         min_obj_size: float = 2500.0,
         zip_patches: bool = False,
@@ -77,7 +76,7 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
         self._workers = ap.process_num_workers_arg(workers)
         self._mask_method = ap.process_mask_method_arg(mask_method)
         self._element_size = ap.process_element_size(element_size)
-        self._area_threshold = ap.process_area_threshold(area_threshold)
+        # self._area_threshold = ap.process_area_threshold(area_threshold)
         self._foreground = ap.process_foreground_arg(patch_foreground)
         self._min_obj_size = ap.process_min_object_size_arg(min_obj_size)
         self._zip_patches = ap.process_zip_patches_arg(zip_patches)
@@ -155,7 +154,7 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
 
         coords = coords.loc[coords.mask_frac >= self._foreground]
 
-        save_dir = self._save_dir / f"{self._slide_path}/patches"
+        save_dir = self._save_dir / f"{self._slide_path.name}/patches"
         save_dir /= f"L={self._patch_size}-mpp={self._patch_mpp:.3f}"
 
         extract_patches(
