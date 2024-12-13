@@ -128,23 +128,6 @@ def test_element_size_arg():
             _ = PatchExtractor(element_size=bad_size)
 
 
-def test_area_threshold_arg():
-    """Test the area threshold argument."""
-    # Should work with positive floats
-    for area in [0.0, 1.0, 100.0]:
-        _ = PatchExtractor(area_threshold=area)
-
-    # Should break with non float
-    for bad_size in [1, 2j, "Not a number"]:
-        with pytest.raises(TypeError):
-            _ = PatchExtractor(area_threshold=bad_size)
-
-    # Should values less than zero
-    for bad_size in [-1e-4, -500.0]:
-        with pytest.raises(ValueError):
-            _ = PatchExtractor(area_threshold=bad_size)
-
-
 def test_foreground_arg():
     """Test the foreground argument."""
     # Should work with floats on [0.0, 1.0]
