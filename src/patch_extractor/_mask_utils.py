@@ -11,7 +11,7 @@ from skimage.filters.rank import entropy
 from skimage.morphology import binary_dilation, binary_erosion
 from skimage.morphology import remove_small_objects
 
-from numpy import ndarray, ones, floor
+from numpy import ndarray, ones, floor, log, percentile
 
 
 def create_tissue_mask(
@@ -99,6 +99,29 @@ def mask_with_schreiber(overview_img: ndarray) -> ndarray:
     return representation > threshold_otsu(representation)
 
 
+def mask_with_optical_density(overview_img: ndarray):
+    """Create a tissue mask using the optical density of ``overview_img``.
+
+    Parameters
+    ----------
+    overview_img : ndarray
+        A low power, RGB overview of the WSI.
+
+    Returns
+    -------
+    ndarray
+        A binary tissue mask.
+
+    """
+    overview_img = img_as_float(overview_img).clip(1.0 / 255.0, 1.0)
+
+    absorbance = -log(overview_img).sum(axis=2)
+
+    absorbance = absorbance.clip(*percentile(absorbance, (1, 99)))
+
+    return absorbance > threshold_otsu(absorbance)
+
+
 def mask_with_entropy(overview_img: ndarray, footprint: ndarray) -> ndarray:
     """Create a tissue mask from ``overview_img``.
 
@@ -127,4 +150,5 @@ mask_methods: Dict[str, Callable] = {
     "otsu": mask_with_otsu,
     "schreiber": mask_with_schreiber,
     "entropy": mask_with_entropy,
+    "optical-density": mask_with_optical_density,
 }
