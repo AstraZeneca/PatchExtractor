@@ -11,7 +11,7 @@ from skimage.filters.rank import entropy
 from skimage.morphology import binary_dilation, binary_erosion
 from skimage.morphology import remove_small_objects
 
-from numpy import ndarray, ones, floor, log
+from numpy import ndarray, ones, floor, log, percentile
 
 
 def create_tissue_mask(
@@ -115,7 +115,9 @@ def mask_with_optical_density(overview_img: ndarray):
     """
     overview_img = img_as_float(overview_img).clip(1.0 / 255.0, 1.0)
 
-    absorbance = -log(overview_img)
+    absorbance = -log(overview_img).sum(axis=2)
+
+    absorbance = absorbance.clip(*percentile(absorbance, (1, 99)))
 
     return absorbance > threshold_otsu(absorbance)
 
