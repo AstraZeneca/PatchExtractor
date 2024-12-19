@@ -125,20 +125,33 @@ def _parse_command_line() -> Namespace:
         action=BooleanOptionalAction,
     )
 
+    parser.add_argument(
+        "--file-types",
+        type=str,
+        help="Types of files to allow in the patch extraction.",
+        default=[".svs", ".ndpi"],
+        nargs="*",
+    )
+
     return parser.parse_args()
 
 
-def _list_target_images(source_path: Path) -> List[Path]:
+def _list_target_images(
+    source_path: Path,
+    file_types: List[str],
+) -> List[Path]:
     """List the target images.
 
     Paramaters
     ----------
     source_path : Path
         Path to the target image or directory.
+    file_types : List[str]
+        Lists of the file types to include.
 
     Returns
     -------
-    target_wsis : List[Path]
+    target_wsi : List[Path]
         List of the target WSIs.
 
     Raises
@@ -157,6 +170,8 @@ def _list_target_images(source_path: Path) -> List[Path]:
         msg = f"Target path '{source_path}' has no associated WSIs."
         raise FileNotFoundError(msg)
 
+    target_wsis = list(filter(lambda x: x.suffix in file_types, target_wsis))
+
     return target_wsis
 
 
@@ -169,7 +184,7 @@ def _extract_patches(args: Namespace):
         Command-line arguments.
 
     """
-    source_paths = _list_target_images(args.source_path)
+    source_paths = _list_target_images(args.source_path, args.file_types)
 
     extractor = PatchExtractor(
         patch_size=args.patch_size,
