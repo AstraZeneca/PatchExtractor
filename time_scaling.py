@@ -69,14 +69,14 @@ def _parse_command_line() -> Namespace:
     )
 
     parser.add_argument(
-        "--min_workers",
+        "--min-workers",
         type=int,
         help="Minimum number of workers to profile with.",
         default=1,
     )
 
     parser.add_argument(
-        "--max_workers",
+        "--max-workers",
         type=int,
         help="Maximum number of workers to profile with.",
         default=12,
@@ -99,7 +99,7 @@ def _parse_command_line() -> Namespace:
     parser.add_argument(
         "--patch-foreground",
         type=float,
-        help="Fraction of each patch which must inersect with the tissue mask.",
+        help="Fraction of each patch which must intersect with the tissue mask.",
         default=0.5,
     )
 
@@ -154,17 +154,19 @@ def _extract_patches(args: Namespace):
         Command-line arguments.
 
     """
-    worker_list = range(args.min_workers, args.max_workers)
+    worker_list = range(args.min_workers, args.max_workers + 1)
 
     save_dir = Path(".tmp-patch-scaling-out-dir")
 
     profile_data: Dict[str, List[Union[float, int]]] = {
         "workers": [],
         "patches": [],
-        "wall_time": [],
+        "wall_time_secs": [],
     }
 
     for workers, no_patches in product(worker_list, [True, False]):
+
+        save_dir.mkdir()
 
         extractor = PatchExtractor(
             patch_size=args.patch_size,
@@ -181,8 +183,6 @@ def _extract_patches(args: Namespace):
 
         start_time = perf_counter()
 
-        rmtree(save_dir)
-
         extractor(
             args.source_path,
             save_dir=save_dir,
@@ -192,9 +192,11 @@ def _extract_patches(args: Namespace):
 
         stop_time = perf_counter()
 
+        rmtree(save_dir)
+
         profile_data["workers"].append(workers)
         profile_data["patches"].append(not no_patches)
-        profile_data["wall_time"].append(stop_time - start_time)
+        profile_data["wall_time_secs"].append(stop_time - start_time)
 
     profile_frame = DataFrame(profile_data)
     profile_frame.to_csv("profile-data.csv", index=False)
