@@ -29,12 +29,19 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
     mpp : float, optional
         The number of microns per pixel in the extracted patches.
     overview_mpp : float, optional
-        The microns per pixel of the low-power overiew image.
+        The microns per pixel of the low-power overview image.
     workers : int, optional
         The number of workers to use, in parallel, when extracting patches
         (has not affect on overview image or masking steps).
     mask_method : str, optional
-        Method to use when create the tissue mask.
+        Method to use when create the tissue mask:
+
+          - ``"otsu"`` for Otsu's method.
+          - ``"schreiber"`` for Schreiber's method.
+          - ``"entropy"`` to use the entropy method.
+          - ``"od"`` for the optical density method.
+          - ``"luminosity"`` for the luminosity method.
+
     element_size : float, optional
         The length of the square dilation, erosion and entropy element to use
         in masking (in microns).
