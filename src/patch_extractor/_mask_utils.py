@@ -4,7 +4,7 @@ from typing import Callable, Dict
 
 from skimage.util import img_as_ubyte, img_as_float
 from skimage.filters import threshold_otsu  # pylint: disable=no-name-in-module
-from skimage.color import rgb2gray  # pylint: disable=no-name-in-module
+from skimage.color import rgb2gray, rgb2lab  # pylint: disable=no-name-in-module
 from skimage.filters.rank import entropy
 
 
@@ -146,9 +146,31 @@ def mask_with_entropy(overview_img: ndarray, footprint: ndarray) -> ndarray:
     return entropy_img > threshold_otsu(entropy_img)
 
 
+def mask_with_luminosity(overview_img: ndarray) -> ndarray:
+    """Create a tissue mask from ``overview_img`` using its luminosity.
+
+    Parameters
+    ----------
+    overview_img : ndarray
+        The RGB overview image on a WSI.
+
+    Returns
+    -------
+    ndarray
+        A binary tissue mask.
+
+    """
+    overview_img = img_as_float(overview_img)
+
+    lum = rgb2lab(overview_img)[:, :, 0]
+
+    return lum < threshold_otsu(lum)
+
+
 mask_methods: Dict[str, Callable] = {
     "otsu": mask_with_otsu,
     "schreiber": mask_with_schreiber,
     "entropy": mask_with_entropy,
-    "optical-density": mask_with_optical_density,
+    "od": mask_with_optical_density,
+    "luminosity": mask_with_luminosity,
 }
