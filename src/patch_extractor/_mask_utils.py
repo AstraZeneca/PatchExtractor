@@ -11,7 +11,9 @@ from skimage.filters.rank import entropy
 from skimage.morphology import binary_dilation, binary_erosion
 from skimage.morphology import remove_small_objects
 
-from numpy import ndarray, ones, floor, log, percentile
+from sklearn.cluster import KMeans  # type: ignore
+
+from numpy import ndarray, ones, floor, log, percentile, bincount, array
 
 
 def create_tissue_mask(
@@ -167,10 +169,40 @@ def mask_with_luminosity(overview_img: ndarray) -> ndarray:
     return lum < threshold_otsu(lum)
 
 
+def mask_with_kmeans(overview_img: ndarray) -> ndarray:
+    """Create a tissue mask from ``overview_img`` by clustering RGB vecs..
+
+    Parameters
+    ----------
+    overview_img : ndarray
+        The RGB overview image on a WSI.
+
+    Returns
+    -------
+    ndarray
+        A binary tissue mask.
+
+    """
+    overview_img = img_as_float(overview_img)
+
+    height, width, channels = overview_img.shape
+
+    overview_img = overview_img.reshape(-1, channels)
+
+    k_means = KMeans(n_clusters=2, random_state=123)
+
+    mask = k_means.fit_predict(overview_img).reshape(height, width)
+
+    smallest_cluster = array(bincount(mask.flatten(), minlength=2)).argmin()
+
+    return mask == smallest_cluster
+
+
 mask_methods: Dict[str, Callable] = {
     "otsu": mask_with_otsu,
     "schreiber": mask_with_schreiber,
     "entropy": mask_with_entropy,
     "od": mask_with_optical_density,
     "luminosity": mask_with_luminosity,
+    "kmeans": mask_with_kmeans,
 }
