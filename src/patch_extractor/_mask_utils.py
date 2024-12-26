@@ -171,6 +171,6 @@ mask_methods: Dict[str, Callable] = {
     "otsu": mask_with_otsu,
     "schreiber": mask_with_schreiber,
     "entropy": mask_with_entropy,
-    "optical-density": mask_with_optical_density,
+    "od": mask_with_optical_density,
     "luminosity": mask_with_luminosity,
 }
