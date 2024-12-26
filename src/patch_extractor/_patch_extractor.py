@@ -41,7 +41,7 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
           - ``"entropy"`` to use the entropy method.
           - ``"od"`` for the optical density method.
           - ``"luminosity"`` for the luminosity method.
-          - ``"kmean"`` to use KMeans clustering on the RGB vectors.
+          - ``"kmeans"`` to use KMeans clustering on the RGB vectors.
 
     element_size : float, optional
         The length of the square dilation, erosion and entropy element to use
