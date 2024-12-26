@@ -61,7 +61,7 @@ text.usetex          : True
 font.family          : Sans serif
 font.style           : normal
 font.variant         : normal
-# font.serif           : Times
+font.serif           : Times
 
 
 legend.frameon       : False
