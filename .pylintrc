@@ -1,0 +1,3 @@
+[MASTER]
+ignore=docs/conf.py
+disable=duplicate-code
