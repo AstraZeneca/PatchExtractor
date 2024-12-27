@@ -12,7 +12,7 @@ repos:
     - id: pylint
       name: Running pylint
       language: system
-      entry: pylint --disable "duplicate-code"
+      entry: pylint --disable "duplicate-code" --ignore docs/**
       pass_filenames: true
       types: [file, python]
       stages: [pre-commit]
