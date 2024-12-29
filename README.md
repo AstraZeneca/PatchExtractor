@@ -1,6 +1,8 @@
 # PatchExtractor:
 A fast and easy WSI patch-extraction tool.
 
+Please see [__the documentation__](https://fluffy-doodle-reqwg84.pages.github.io/).
+
 ## Why use this tool?
 In computational pathology projects, we invariably have to stop and consider the extraction of patches from WSIs in order to facilitate our analysis. This is often slow, boring and and not what you want to spend your time and energy on.
 
