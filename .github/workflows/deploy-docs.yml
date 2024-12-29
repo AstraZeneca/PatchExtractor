@@ -30,4 +30,4 @@ jobs:
       - name: Update docs
         shell: bash -l {0}
         run: |
-          ./.build_docs.sh
+          ./deploy-docs.sh
