@@ -46,7 +46,7 @@ def plot_time_scaling(args: Namespace):
 
     styles = {True: "-or", False: "--k"}
 
-    figure, axis = plt.subplots(1, 1, figsize=(2.5, 2.5))
+    figure, axis = plt.subplots(1, 1, figsize=(4, 2))
 
     for patches in [True, False]:
 
@@ -65,6 +65,11 @@ def plot_time_scaling(args: Namespace):
 
     axis.set_ylim(bottom=0.0, top=40.0)
     axis.set_ylabel("Wall-clock time (seconds)")
+
+    x_min, x_max = axis.get_xlim()
+    y_min, y_max = axis.get_ylim()
+
+    axis.set_aspect(0.5 * (x_max - x_min) / (y_max - y_min))
 
     axis.legend()
 
