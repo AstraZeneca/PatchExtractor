@@ -13,3 +13,32 @@ Using this tool could make your life easier.
 - Multiple masking methods:
   - Different histological stains, staining protocols and WSI scanners give rise to weird and wonderful variability in images which are more or less conducive to certain tissue masking methods.
   - The choice of multiple methods can help with this.
+
+
+## Adding your own masking method
+
+All of the tissue masking methods are in [this file](src/patch_extractor/_mask_utils.py).
+
+To add your own masking method, you need to do two things.
+
+- Add a function to the file ``src/patch_extractor/_mask_utils.py`` of the form
+```python
+def my_masking_method(overview_img : ndarray) -> ndarray:
+  """Produce a tissue mask from ``overview_img``.
+
+  Parameters
+  ----------
+  overview_img : ndarray
+    Low-power RGB overview of the WSI.
+
+  Returns
+  -------
+  ndarray
+      Boolean tissue mask.
+
+  """
+  # Your code here ...
+```
+- Add the masking method to the dictionary ``mask_methods``, which is at the bottom of the file ``src/patch_extractor/_mask_utils.py``. You can (optionally) run ``pytest tests/`` to be sure.
+
+If you wold like your own masking method added to this package, create an issue in the repo, or make a pull request.
