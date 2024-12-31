@@ -84,7 +84,6 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
         self._workers = ap.process_num_workers_arg(workers)
         self._mask_method = ap.process_mask_method_arg(mask_method)
         self._element_size = ap.process_element_size(element_size)
-        # self._area_threshold = ap.process_area_threshold(area_threshold)
         self._foreground = ap.process_foreground_arg(patch_foreground)
         self._min_obj_size = ap.process_min_object_size_arg(min_obj_size)
         self._zip_patches = ap.process_zip_patches_arg(zip_patches)
