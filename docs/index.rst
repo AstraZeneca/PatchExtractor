@@ -20,3 +20,9 @@ PatchExtractor
    :members:
    :undoc-members:
    :special-members: __call__
+
+
+.. automodule:: patch_extractor.misc
+   :members:
+   :undoc-members:
+   :special-members: __call__
