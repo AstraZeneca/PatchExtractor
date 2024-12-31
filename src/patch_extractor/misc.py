@@ -4,7 +4,7 @@ from numpy import ndarray
 
 
 def is_rgb(img: ndarray) -> bool:
-    """Return ``True`` if ``img`` is RGB.
+    """Return ``True`` if ``img`` is RGB, else ``False``.
 
     Parameters
     ----------
