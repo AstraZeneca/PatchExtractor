@@ -18,10 +18,10 @@ from skimage.transform import resize  # pylint: disable=no-name-in-module
 
 from pandas import DataFrame
 
-from numpy import save, uint8
+from numpy import save
 
 from ._mpp_utils import get_slide_mpp
-from .misc import is_rgb
+from .misc import is_rgb_uint8
 
 
 def create_patch_coord_df(
@@ -136,12 +136,12 @@ def _save_patch(info: Dict[str, Any]):
         bottom=info["bottom"],
     )
 
-    was_uint8 = patch.dtype is uint8
+    was_rgb_uint8 = is_rgb_uint8(patch)
 
     patch = resize(
         image=patch,
         output_shape=(info["patch_size"], info["patch_size"]),
-        order=1 if was_uint8 else 0,
+        order=1 if was_rgb_uint8 else 0,
     )
 
     width = info["right"] - info["left"]
@@ -151,7 +151,7 @@ def _save_patch(info: Dict[str, Any]):
     # pylint: disable=line-too-long
     file_name /= f"{info['slide_path'].name}---[x={info['left']},y={info['top']},w={width},h={height}].png"
 
-    if is_rgb(patch) and was_uint8:
+    if was_rgb_uint8:
         imsave(file_name, img_as_ubyte(patch), check_contrast=False)
     else:
         save(file_name.with_suffix(".npy"), patch)
