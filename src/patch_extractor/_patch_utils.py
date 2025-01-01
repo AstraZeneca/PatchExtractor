@@ -18,7 +18,7 @@ from skimage.transform import resize  # pylint: disable=no-name-in-module
 
 from pandas import DataFrame
 
-from numpy import save
+from numpy import save, uint8
 
 from ._mpp_utils import get_slide_mpp
 from .misc import is_rgb
@@ -139,6 +139,7 @@ def _save_patch(info: Dict[str, Any]):
     patch = resize(
         image=patch,
         output_shape=(info["patch_size"], info["patch_size"]),
+        order=1 if patch.dtype is uint8 else 0,
     )
 
     width = info["right"] - info["left"]
@@ -151,7 +152,7 @@ def _save_patch(info: Dict[str, Any]):
     if is_rgb(patch):
         imsave(file_name, img_as_ubyte(patch), check_contrast=False)
     else:
-        save(file_name.with_suffix(".npy"), img_as_ubyte(patch))
+        save(file_name.with_suffix(".npy"), patch)
 
 
 # pylint: disable=too-many-positional-arguments,too-many-arguments
