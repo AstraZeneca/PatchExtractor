@@ -3,11 +3,13 @@
 from time import perf_counter
 
 
-from typing import Union
+from typing import Union, Optional
 
 from pathlib import Path
 
 from skimage.io import imsave, imread
+
+from pandas import read_csv
 
 from . import _argument_processing as ap
 from . import _region_extraction as reg_ext
@@ -141,28 +143,43 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
         overview_image[~mask.astype(bool)] = 0
         imsave(self._overview_file_path("masked-image"), overview_image)
 
-    def _extract_patches(self):
-        """Extract patches from a WSI."""
+    def _extract_patches(self, patch_csv: Optional[Path] = None):
+        """Extract patches from a WSI.
+
+        Parameters
+        ----------
+        patch_csv : Path, optional
+            Path to a csv file of predetermined patches (see docstring of
+            ``__call__`` method).
+
+        """
         requested_mpp_less_than_slide(self._slide_path, self._overview_mpp)
 
-        coords = create_patch_coord_df(
-            self._slide_path,
-            self._patch_size,
-            self._stride,
-            self._patch_mpp,
-        )
+        if patch_csv is None:
+            coords = create_patch_coord_df(
+                self._slide_path,
+                self._patch_size,
+                self._stride,
+                self._patch_mpp,
+            )
 
-        mask_intersection(
-            coords,
-            self._slide_path,
-            self._overview_file_path("tissue-mask"),
-            self._overview_mpp,
-        )
+            mask_intersection(
+                coords,
+                self._slide_path,
+                self._overview_file_path("tissue-mask"),
+                self._overview_mpp,
+            )
 
-        coords = coords.loc[coords.mask_frac >= self._foreground]
+            coords = coords.loc[coords.mask_frac >= self._foreground]
+        else:
+            coords = read_csv(patch_csv)
 
         save_dir = self._save_dir / f"{self._slide_path.name}/patches"
         save_dir /= f"L={self._patch_size}-mpp={self._patch_mpp:.3f}"
+
+        csv = Path(str(save_dir).replace("/patches/", "/manifests/") + ".csv")
+        csv.parent.mkdir(parents=True)
+        coords.to_csv(csv, index=False)
 
         extract_patches(
             coords,
@@ -195,6 +212,7 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
         save_dir: Union[str, Path],
         print_time: bool = True,
         no_patches: bool = False,
+        patch_csv: Optional[Path] = None,
     ):
         """Extract patches from ``wsi``.
 
@@ -208,6 +226,11 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
             Whether to print the processing time for ``wsi`` or not.
         no_patches : bool
             If ``True``, we create the overview image and tissue mask, only.
+        patch_csv : Path, optional
+            Path to a csv file containing pre-determined patch coords in the
+            level zero reference frame. Must contain columns "left", "right",
+            "top", "bottom". This is useful if want to extract paired patches
+            from a histological WSI and a WSI segmentation mask.
 
         """
         start = perf_counter()
@@ -216,7 +239,9 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
         self._save_dir = Path(save_dir)
 
         self._create_overview_image()
-        self._create_mask_images()
+
+        if patch_csv is None:
+            self._create_mask_images()
 
         if no_patches is False:
             self._extract_patches()
