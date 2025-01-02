@@ -175,10 +175,11 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
             coords = read_csv(patch_csv)
 
         save_dir = self._save_dir / f"{self._slide_path.name}/patches"
-
-        coords.to_csv(save_dir.with_name("patch-manifest.csv"), index=False)
-
         save_dir /= f"L={self._patch_size}-mpp={self._patch_mpp:.3f}"
+
+        csv = Path(str(save_dir).replace("/patches/", "/manifests/") + ".csv")
+        csv.parent.mkdir(parents=True)
+        coords.to_csv(csv, index=False)
 
         extract_patches(
             coords,
