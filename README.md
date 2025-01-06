@@ -14,6 +14,14 @@ Using this tool could make your life easier.
   - Different histological stains, staining protocols and WSI scanners give rise to weird and wonderful variability in images which are more or less conducive to certain tissue masking methods.
   - The choice of multiple methods can help with this.
 
+## How to use this tool
+
+### Using the Python object
+...
+
+### Using the command-line tool
+...
+
 
 ## Adding your own masking method
 
