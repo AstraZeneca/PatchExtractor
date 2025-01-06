@@ -17,10 +17,27 @@ Using this tool could make your life easier.
 ## How to use this tool
 
 ### Using the Python object
-...
+One you have built and activated the Python environment:
+```python
+from patch_extractor import PatchExtractor
+
+extractor = PatchExtractor()
+
+extractor("/path/to/my/wsi-file.svs", "/path/to/desired/save-dir/")
+
+```
 
 ### Using the command-line tool
-...
+```bash
+./extract_patches.py /path/to/source/img-or-dir/ /path/to/save/dir/
+```
+
+
+
+For full help with the arguments, run
+```bash
+./extract_patches.py --help
+```
 
 
 ## Adding your own masking method
