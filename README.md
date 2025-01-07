@@ -14,6 +14,31 @@ Using this tool could make your life easier.
   - Different histological stains, staining protocols and WSI scanners give rise to weird and wonderful variability in images which are more or less conducive to certain tissue masking methods.
   - The choice of multiple methods can help with this.
 
+## How to use this tool
+
+### Using the Python object
+One you have built and activated the Python environment:
+```python
+from patch_extractor import PatchExtractor
+
+extractor = PatchExtractor()
+
+extractor("/path/to/my/wsi-file.svs", "/path/to/desired/save-dir/")
+
+```
+
+### Using the command-line tool
+```bash
+./extract_patches.py /path/to/source/img-or-dir/ /path/to/save/dir/
+```
+
+
+
+For full help with the arguments, run
+```bash
+./extract_patches.py --help
+```
+
 
 ## Adding your own masking method
 
