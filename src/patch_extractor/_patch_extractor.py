@@ -244,7 +244,7 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
             self._create_mask_images()
 
         if no_patches is False:
-            self._extract_patches()
+            self._extract_patches(patch_csv=patch_csv)
 
         stop = perf_counter()
 
