@@ -91,6 +91,8 @@ def tissue_mask_from_polygons(
     scale_factor = slide_mpp / target_mpp
     mask = zeros((overview_height, overview_width), dtype=bool)
 
+    _check_polygons_conform(polygons)
+
     for poly in polygons:
 
         poly = poly.astype(float) * scale_factor
@@ -98,6 +100,39 @@ def tissue_mask_from_polygons(
         mask = mask | polygon2mask((overview_height, overview_width), poly)
 
     return img_as_ubyte(mask)
+
+
+def _check_polygons_conform(polys: List[ndarray]):
+    """Except if the polygons are not of the correct format.
+
+    Parameters
+    ----------
+    polys : List[ndarray]
+        A list of polygons.
+
+    Raises
+    ------
+    TypeError
+        If ``polys`` is not a list.
+    TypeError
+        If any of the items in ``polys`` is not an ``ndarray``.
+    ValueError
+        If any of the arrays don't have shape (N, 2)
+
+
+    """
+    if not isinstance(polys, list):
+        msg = f"'polygons' should be list, not '{type(polys)}'."
+        raise TypeError(msg)
+
+    if not all(map(lambda x: isinstance(x, ndarray), polys)):
+        msg = "All items in 'polygons' should be ndarray. Got "
+        msg += f"{list(map(type, polys))}"
+        raise TypeError(msg)
+
+    if not all(map(lambda x: x.ndim == 2 and x.shape[1] == 2, polys)):
+        msg = "'polygons' contents should be 2D arrays of shape (N, 2)."
+        raise ValueError(msg)
 
 
 def mask_with_otsu(overview_img: ndarray) -> ndarray:
