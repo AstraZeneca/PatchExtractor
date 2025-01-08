@@ -3,20 +3,25 @@
 from time import perf_counter
 
 
-from typing import Union, Optional
+from typing import Union, Optional, List
 
 from pathlib import Path
 
 from skimage.io import imsave, imread
 
+from numpy import ndarray
+
 from pandas import read_csv
 
 from . import _argument_processing as ap
 from . import _region_extraction as reg_ext
-from ._mask_utils import create_tissue_mask
+from ._mask_utils import (
+    tissue_mask_from_scratch,
+    tissue_mask_from_polygons,
+)
 from ._patch_utils import create_patch_coord_df, mask_intersection, extract_patches
 
-from ._mpp_utils import requested_mpp_less_than_slide
+from ._mpp_utils import requested_mpp_less_than_slide, get_slide_mpp
 
 
 class PatchExtractor:  # pylint: disable=too-many-instance-attributes
@@ -126,17 +131,37 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
 
         imsave(overview_path, overview)
 
-    def _create_mask_images(self):
-        """Create an image of the tissue mask."""
+    def _create_mask_images(self, mask_polys: Optional[List[ndarray]] = None):
+        """Create an image of the tissue mask.
+
+        Parameters
+        ----------
+        mask_poly : List[ndarray], optional
+            A list of arrays of (row, col) coordinates of the points on the
+            polygons in the tissue mask. There should be one polygon per
+            object, and the arrays should have shape (N, 2).
+
+        """
         overview_image = imread(self._overview_file_path("overview"))
 
-        mask = create_tissue_mask(
-            overview_image,
-            self._mask_method,
-            self._overview_mpp,
-            self._element_size,
-            self._min_obj_size,
-        )
+        if mask_polys is None:
+
+            mask = tissue_mask_from_scratch(
+                overview_image,
+                self._mask_method,
+                self._overview_mpp,
+                self._element_size,
+                self._min_obj_size,
+            )
+        else:
+
+            mask = tissue_mask_from_polygons(
+                overview_height=overview_image.shape[0],
+                overview_width=overview_image.shape[1],
+                polygons=mask_polys,
+                slide_mpp=get_slide_mpp(self._slide_path),
+                target_mpp=self._overview_mpp,
+            )
 
         imsave(self._overview_file_path("tissue-mask"), mask)
 
@@ -213,6 +238,7 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
         print_time: bool = True,
         no_patches: bool = False,
         patch_csv: Optional[Path] = None,
+        mask_polygons: Optional[List[ndarray]] = None,
     ):
         """Extract patches from ``wsi``.
 
@@ -230,7 +256,20 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
             Path to a csv file containing pre-determined patch coords in the
             level zero reference frame. Must contain columns "left", "right",
             "top", "bottom". This is useful if want to extract paired patches
-            from a histological WSI and a WSI segmentation mask.
+            from a histological WSI and a WSI segmentation mask. If specified,
+            aside from the patch size, the patch parameters specified when
+            this class was instantiated are ignored, and no tissue mask is
+            generated.
+        mask_polygons : List[ndarray], optional
+            Polygons delineating each of the objects in the tissue mask. There
+            should be one array per object, each of shape (N, 2), with coords
+            of the form (row, col). The coordinates should be in the
+            level-zero reference frame of the WSI. If ``patch_csv`` is
+            supplied, this argument is ignored.
+
+            ```
+            mask_polygon=[np.array([(row, col), ...]), np.array([(row, col), ...])]
+            ```
 
         """
         start = perf_counter()
@@ -241,7 +280,7 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
         self._create_overview_image()
 
         if patch_csv is None:
-            self._create_mask_images()
+            self._create_mask_images(mask_polys=mask_polygons)
 
         if no_patches is False:
             self._extract_patches(patch_csv=patch_csv)
