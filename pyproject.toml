@@ -16,8 +16,8 @@ dependencies = ["tiffslide", "numpy", "scikit-image", "pandas", "pandas-stubs", 
 
 
 [project.urls]
-"Homepage" = "https://github.com/jdenholm/PatchExtractor"
-"Bug Tracker" = "https://github.com/jdenholm/PatchExtractor/Issues"
+"Homepage" = "https://github.com/azu-biopharmaceuticals-rd/PatchExtractor/"
+"Bug Tracker" = "https://github.com/azu-biopharmaceuticals-rd/PatchExtractorIssues"
 
 [tool.setuptools]
 package-dir = {}
