@@ -67,3 +67,7 @@ def my_masking_method(overview_img : ndarray) -> ndarray:
 - Add the masking method to the dictionary ``mask_methods``, which is at the bottom of the file ``src/patch_extractor/_mask_utils.py``. You can (optionally) run ``pytest tests/`` to be sure.
 
 If you wold like your own masking method added to this package, create an issue in the repo, or make a pull request.
+
+## A note on immunofluorescence (IF) images
+
+In IF images, the foreground is lighter than background (the opposite of histology), so choosing masking methods methods which rely on light-dark separation, such as Otsu's method, is not a good idea. KMean, or entropy, are more appropriate.
