@@ -129,7 +129,7 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
         overview_path = self._overview_file_path("overview")
         overview_path.parent.mkdir(parents=True, exist_ok=True)
 
-        imsave(overview_path, overview)
+        imsave(overview_path, overview, check_contrast=False)
 
     def _create_mask_images(self, mask_polys: Optional[List[ndarray]] = None):
         """Create an image of the tissue mask.
@@ -163,10 +163,18 @@ class PatchExtractor:  # pylint: disable=too-many-instance-attributes
                 target_mpp=self._overview_mpp,
             )
 
-        imsave(self._overview_file_path("tissue-mask"), mask)
+        imsave(
+            self._overview_file_path("tissue-mask"),
+            mask,
+            check_contrast=False,
+        )
 
         overview_image[~mask.astype(bool)] = 0
-        imsave(self._overview_file_path("masked-image"), overview_image)
+        imsave(
+            self._overview_file_path("masked-image"),
+            overview_image,
+            check_contrast=False,
+        )
 
     def _extract_patches(self, patch_csv: Optional[Path] = None):
         """Extract patches from a WSI.
