@@ -10,6 +10,7 @@ from skimage.transform import rescale  # pylint: disable=no-name-in-module
 from tiffslide import TiffSlide
 
 from . import _mpp_utils as mu
+from .misc import is_rgb_uint8
 
 
 def extract_overview_image(wsi: Path, overview_mpp: float) -> ndarray:
@@ -40,5 +41,9 @@ def extract_overview_image(wsi: Path, overview_mpp: float) -> ndarray:
             size=dims,
             as_array=True,
         )
+
+    if not is_rgb_uint8(region):
+        region = region.mean(axis=2)[:, :, None].repeat(3, axis=2)
+        region /= region.max()  # type: ignore
 
     return img_as_ubyte(rescale(region, scale_factor, channel_axis=2))
