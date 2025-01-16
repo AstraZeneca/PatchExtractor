@@ -12,6 +12,8 @@ from skimage.draw import polygon2mask  # pylint: disable=no-name-in-module
 from skimage.morphology import binary_dilation, binary_erosion
 from skimage.morphology import remove_small_objects
 
+from scipy.ndimage import binary_fill_holes  # type: ignore
+
 from sklearn.cluster import KMeans  # type: ignore
 
 from numpy import ndarray, ones, floor, log, percentile, bincount, array, zeros
@@ -50,6 +52,8 @@ def tissue_mask_from_scratch(
     mask_img = binary_dilation(mask_img, footprint=ones((size, size)))
 
     mask_img = binary_erosion(mask_img, footprint=ones((size, size)))
+
+    mask_img = binary_fill_holes(mask_img)
 
     pixel_area = overview_mpp * overview_mpp
 
