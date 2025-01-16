@@ -9,7 +9,7 @@ from skimage.transform import rescale  # pylint: disable=no-name-in-module
 
 from tiffslide import TiffSlide
 
-from . import _mpp_utils as mu
+from patch_extractor import _mpp_utils as mu
 from .misc import is_rgb_uint8
 
 
