@@ -12,7 +12,7 @@ authors = [
 readme = "README.md"
 license = {file = "LICENSE.md"}
 
-dependencies = ["tiffslide", "numpy", "scikit-image", "pandas", "pandas-stubs", "scikit-learn"]
+dependencies = ["tiffslide", "numpy", "scikit-image", "pandas", "pandas-stubs", "scikit-learn", "scipy"]
 
 
 [project.urls]
