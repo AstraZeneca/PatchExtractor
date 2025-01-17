@@ -9,8 +9,8 @@ from skimage.transform import rescale  # pylint: disable=no-name-in-module
 
 from tiffslide import TiffSlide
 
-from . import _mpp_utils as mu
-from .misc import is_rgb_uint8
+from patch_extractor import _mpp_utils as mu
+from patch_extractor.misc import is_rgb_uint8
 
 
 def extract_overview_image(wsi: Path, overview_mpp: float) -> ndarray:
