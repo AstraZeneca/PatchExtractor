@@ -9,7 +9,7 @@ on:
 
 jobs:
   code-quality:
-    name: Code quality (${{ matrix.python-version }}, ${{ matrix.os }})
+    name: Package installation (${{ matrix.python-version }}, ${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     strategy:
