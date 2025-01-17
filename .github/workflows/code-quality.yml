@@ -29,7 +29,7 @@ jobs:
           environment-file: requirements-dev.conda.yaml
           auto-activate-base: false
           python-version: ${{ matrix.python-version }}
-          channels: anaconda, conda-forge, defaults
+          channels: main
 
       - name: env list
         shell: bash -l {0}
