@@ -142,6 +142,13 @@ def _parse_command_line() -> Namespace:
         nargs="*",
     )
 
+    parser.add_argument(
+        "--num-realisations",
+        help="Number of realisations to run.",
+        type=int,
+        default=5,
+    )
+
     return parser.parse_args()
 
 
@@ -164,7 +171,13 @@ def _extract_patches(args: Namespace):
         "wall_time_secs": [],
     }
 
-    for workers, no_patches in product(worker_list, [True, False]):
+    param_iter = product(
+        worker_list,
+        [True, False],
+        range(args.num_realisations),
+    )
+
+    for workers, no_patches, run_idx in param_iter:
 
         save_dir.mkdir()
 
@@ -197,6 +210,7 @@ def _extract_patches(args: Namespace):
         profile_data["workers"].append(workers)
         profile_data["patches"].append(not no_patches)
         profile_data["wall_time_secs"].append(stop_time - start_time)
+        profile_data["realisation"].append(run_idx)
 
     profile_frame = DataFrame(profile_data)
     profile_frame.to_csv("profile-data.csv", index=False)
