@@ -1,6 +1,8 @@
 name: patch-extractor
 channels:
+  - defaults
   - main
+  - conda-forge
 dependencies:
   - python
   - pip
