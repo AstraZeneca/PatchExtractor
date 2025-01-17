@@ -169,6 +169,7 @@ def _extract_patches(args: Namespace):
         "workers": [],
         "patches": [],
         "wall_time_secs": [],
+        "run_idx": []
     }
 
     param_iter = product(
@@ -210,7 +211,7 @@ def _extract_patches(args: Namespace):
         profile_data["workers"].append(workers)
         profile_data["patches"].append(not no_patches)
         profile_data["wall_time_secs"].append(stop_time - start_time)
-        profile_data["realisation"].append(run_idx)
+        profile_data["run_idx"].append(run_idx)
 
     profile_frame = DataFrame(profile_data)
     profile_frame.to_csv("profile-data.csv", index=False)
