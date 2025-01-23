@@ -7,6 +7,8 @@ from pathlib import Path
 
 from pandas import read_csv
 
+from numpy import array
+
 import matplotlib.pyplot as plt
 
 
@@ -44,7 +46,7 @@ def plot_time_scaling(args: Namespace):
     """
     time_data = read_csv(args.profile_csv)
 
-    styles = {True: "-or", False: "--k"}
+    styles = {True: "-o", False: "--"}
 
     figure, axis = plt.subplots(1, 1, figsize=(4, 2))
 
@@ -52,11 +54,18 @@ def plot_time_scaling(args: Namespace):
 
         frame = time_data.loc[time_data.patches == patches]
 
+        means = frame.groupby("workers").wall_time_secs.mean().reset_index()
+
+        print("With patches" if patches is True else "Without patches")
+        print(means)
+        print("\n")
+
         axis.plot(
-            frame.workers,
-            frame.wall_time_secs,
+            means.workers,
+            means.wall_time_secs,
             styles[patches],
             label=("Full patch extraction" if patches is True else "Masking only"),
+            color=array([122, 1, 119]) / 255.0 if patches is True else "k",
         )
 
     axis.set_xticks(sorted(time_data.workers.unique()))

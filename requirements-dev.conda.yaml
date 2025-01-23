@@ -15,4 +15,5 @@ dependencies:
     - pydocstyle
     - pylint
     - pre-commit
+    - matplotlib
     - -e .
