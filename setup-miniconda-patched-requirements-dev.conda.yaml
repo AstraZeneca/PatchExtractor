@@ -1,0 +1,20 @@
+name: patch-extractor
+channels:
+  - main
+dependencies:
+  - python
+  - pip
+  - pip:
+      - sphinx
+      - sphinx_rtd_theme
+      - ipykernel
+      - black
+      - black-nb
+      - mypy
+      - pytest
+      - pydocstyle
+      - pylint
+      - pre-commit
+      - matplotlib
+      - '-e .'
+  - python=3.10

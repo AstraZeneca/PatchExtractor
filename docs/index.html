@@ -1,0 +1,244 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PatchExtractor documentation &mdash; PatchExtractor 0.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            PatchExtractor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">PatchExtractor documentation</a></li>
+<li><a class="reference internal" href="#module-patch_extractor._patch_extractor">PatchExtractor</a><ul>
+<li><a class="reference internal" href="#patch_extractor._patch_extractor.PatchExtractor"><code class="docutils literal notranslate"><span class="pre">PatchExtractor</span></code></a><ul>
+<li><a class="reference internal" href="#patch_extractor._patch_extractor.PatchExtractor.__call__"><code class="docutils literal notranslate"><span class="pre">PatchExtractor.__call__()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#patch_extractor.misc.is_rgb"><code class="docutils literal notranslate"><span class="pre">is_rgb()</span></code></a></li>
+<li><a class="reference internal" href="#patch_extractor.misc.is_rgb_uint8"><code class="docutils literal notranslate"><span class="pre">is_rgb_uint8()</span></code></a></li>
+<li><a class="reference internal" href="#patch_extractor.misc.is_uint8"><code class="docutils literal notranslate"><span class="pre">is_uint8()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">PatchExtractor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">PatchExtractor documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="patchextractor-documentation">
+<h1>PatchExtractor documentation<a class="headerlink" href="#patchextractor-documentation" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="module-patch_extractor._patch_extractor">
+<span id="patchextractor"></span><h1>PatchExtractor<a class="headerlink" href="#module-patch_extractor._patch_extractor" title="Link to this heading"></a></h1>
+<p>WSI patch-extraction tool.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="patch_extractor._patch_extractor.PatchExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">patch_extractor._patch_extractor.</span></span><span class="sig-name descname"><span class="pre">PatchExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">patch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">512</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">256</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overview_mpp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'otsu'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_foreground</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_obj_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2500.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zip_patches</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/patch_extractor/_patch_extractor.html#PatchExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#patch_extractor._patch_extractor.PatchExtractor" title="Link to this definition"></a></dt>
+<dd><p>WSI patch-extraction tool.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>patch_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Size of the patches to extract.</p></li>
+<li><p><strong>stride</strong> (<em>int</em><em>, </em><em>optional</em>) – Stride to the sliding window used to extract patches.</p></li>
+<li><p><strong>mpp</strong> (<em>float</em><em>, </em><em>optional</em>) – The number of microns per pixel in the extracted patches.</p></li>
+<li><p><strong>overview_mpp</strong> (<em>float</em><em>, </em><em>optional</em>) – The microns per pixel of the low-power overview image.</p></li>
+<li><p><strong>workers</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of workers to use, in parallel, when extracting patches
+(has not affect on overview image or masking steps).</p></li>
+<li><p><strong>mask_method</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>Method to use when create the tissue mask:</p>
+<blockquote>
+<div><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;otsu&quot;</span></code> for Otsu’s method.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;schreiber&quot;</span></code> for Schreiber’s method.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;entropy&quot;</span></code> to use the entropy method.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;od&quot;</span></code> for the optical density method.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;luminosity&quot;</span></code> for the luminosity method.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;kmeans&quot;</span></code> to use KMeans clustering on the RGB vectors.</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>element_size</strong> (<em>float</em><em>, </em><em>optional</em>) – The length of the square dilation, erosion and entropy element to use
+in masking (in microns).</p></li>
+<li><p><strong>area_threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The size, beneath which, objects are removed from the mask.</p></li>
+<li><p><strong>patch_foreground</strong> (<em>float</em><em>, </em><em>optional</em>) – The fraction of a patch which must contain foreground for it to be
+considered. Should be on [0.0, 1.0].</p></li>
+<li><p><strong>workers</strong> – The number of workers to use in the patch extraction.</p></li>
+<li><p><strong>min_obj_size</strong> (<em>float</em><em>, </em><em>optional</em>) – The area of the smallest objects, in square microns, permitted in the
+mask.</p></li>
+<li><p><strong>zip_patches</strong> (<em>bool</em><em>, </em><em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, the patch subdirectory the patches are writtent to will
+instead be a zipfile.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="patch_extractor._patch_extractor.PatchExtractor.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wsi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_patches</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_csv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_polygons</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/patch_extractor/_patch_extractor.html#PatchExtractor.__call__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#patch_extractor._patch_extractor.PatchExtractor.__call__" title="Link to this definition"></a></dt>
+<dd><p>Extract patches from <code class="docutils literal notranslate"><span class="pre">wsi</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wsi</strong> (<em>Path</em>) – Path to the whole-slide image.</p></li>
+<li><p><strong>save_dir</strong> (<em>Path</em>) – The parent directory to write in.</p></li>
+<li><p><strong>print_time</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to print the processing time for <code class="docutils literal notranslate"><span class="pre">wsi</span></code> or not.</p></li>
+<li><p><strong>no_patches</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, we create the overview image and tissue mask, only.</p></li>
+<li><p><strong>patch_csv</strong> (<em>Path</em><em>, </em><em>optional</em>) – Path to a csv file containing pre-determined patch coords in the
+level zero reference frame. Must contain columns “left”, “right”,
+“top”, “bottom”. This is useful if want to extract paired patches
+from a histological WSI and a WSI segmentation mask. If specified,
+aside from the patch size, the patch parameters specified when
+this class was instantiated are ignored, and no tissue mask is
+generated.</p></li>
+<li><p><strong>mask_polygons</strong> (<em>List</em><em>[</em><em>ndarray</em><em>]</em><em>, </em><em>optional</em>) – <p>Polygons delineating each of the objects in the tissue mask. There
+should be one array per object, each of shape (N, 2), with coords
+of the form (row, col). The coordinates should be in the
+level-zero reference frame of the WSI. If <code class="docutils literal notranslate"><span class="pre">patch_csv</span></code> is
+supplied, this argument is ignored.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">mask_polygon=[np.array([(row,</span> <span class="pre">col),</span> <span class="pre">...]),</span> <span class="pre">np.array([(row,</span> <span class="pre">col),</span> <span class="pre">...])]</span>
+<span class="pre">`</span></code></p>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-patch_extractor.misc">Miscellaneous functions.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="patch_extractor.misc.is_rgb">
+<span class="sig-prename descclassname"><span class="pre">patch_extractor.misc.</span></span><span class="sig-name descname"><span class="pre">is_rgb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/patch_extractor/misc.html#is_rgb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#patch_extractor.misc.is_rgb" title="Link to this definition"></a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">img</span></code> is RGB, else <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>img</strong> (<em>ndarray</em>) – An image whose RGB status is to be checked.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the image is RGB or not.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="patch_extractor.misc.is_rgb_uint8">
+<span class="sig-prename descclassname"><span class="pre">patch_extractor.misc.</span></span><span class="sig-name descname"><span class="pre">is_rgb_uint8</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/patch_extractor/misc.html#is_rgb_uint8"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#patch_extractor.misc.is_rgb_uint8" title="Link to this definition"></a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">img</span></code> is RGB and uint8, else <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>img</strong> (<em>ndarray</em>) – An image whose RGB uint8 status is to be checked.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether the image is RGB and uint8.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="patch_extractor.misc.is_uint8">
+<span class="sig-prename descclassname"><span class="pre">patch_extractor.misc.</span></span><span class="sig-name descname"><span class="pre">is_uint8</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/patch_extractor/misc.html#is_uint8"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#patch_extractor.misc.is_uint8" title="Link to this definition"></a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">img</span></code> has uint8 dtype, else <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>img</strong> (<em>ndarray</em>) – An image whose uint8 status is to be checked.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If the image is of dtype uint8.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, J. Denholm.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
