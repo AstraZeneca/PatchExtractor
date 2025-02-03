@@ -205,7 +205,7 @@ def _extract_patches(args: Namespace):
             wsi=source_path,
             save_dir=args.target_path,
             print_time=args.print_time,
-            no_patches=args.patches,
+            no_patches=not args.patches,
         )
 
 
