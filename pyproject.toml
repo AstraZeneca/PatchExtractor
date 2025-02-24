@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "patch_extractor"
-version = "0.1.1"
+version = "0.1.2"
 description = "WSI patch extractor for computional pathology."
 requires-python = ">=3.8,<3.14"
 
