@@ -1,5 +1,7 @@
+![Maturity level-0](https://img.shields.io/badge/Maturity%20Level-ML--0-red)
+
 # PatchExtractor:
-A fast and easy WSI patch-extraction tool.
+This package serves as a fast and easy WSI patch-extraction tool for computational pathology.
 
 Please see [__the documentation__](https://fluffy-doodle-reqwg84.pages.github.io/).
 
@@ -15,6 +17,39 @@ Using this tool could make your life easier.
   - The choice of multiple methods can help with this.
 
 ## How to use this tool
+
+The dependencies are defined in the file [pyproject.toml](pyproject.toml).
+
+### Installation
+
+#### Option 1
+You can directly install a particular version of the package from GitHub
+```bash
+https://github.com/AstraZeneca/PatchExtractor/archive/v0.1.0.zip
+```
+or the default main branch
+```bash
+https://github.com/AstraZeneca/PatchExtractor/archive/main.zip
+```
+
+#### Option 2
+Clone the repo and install it locally.
+
+```bash
+git clone git@github.com:AstraZeneca/PatchExtractor.git
+cd PatchExtractor
+pip install .
+```
+It is advisable to do this inside a Python environment.
+
+#### Option 3
+Installing for dev purposes.
+```bash
+git clone git@github.com:AstraZeneca/PatchExtractor.git
+conda env create -f requirements-dev.conda.yaml
+conda activate patch-extractor
+```
+
 
 ### Using the Python object
 One you have built and activated the Python environment:
