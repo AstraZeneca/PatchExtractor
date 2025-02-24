@@ -50,6 +50,11 @@ conda env create -f requirements-dev.conda.yaml
 conda activate patch-extractor
 ```
 
+If you are using this with developing in mind, you might like to install the pre-commit hooks.
+```bash
+pre-commit install
+```
+
 
 ### Using the Python object
 One you have built and activated the Python environment:
